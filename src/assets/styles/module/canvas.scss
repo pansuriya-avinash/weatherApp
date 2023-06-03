@@ -1,0 +1,79 @@
+.canvas-section {
+	margin: 1rem 4rem;
+	.canvas-div{
+		width: 1200px;
+		margin: 0 auto;
+		.work-space-section {
+			background:url('../../images/workSpaceBackground.png');
+			display: grid;
+			grid-template-columns: auto auto auto auto auto;
+			.work-space-wrapper{
+				border:1px solid #3A4553;
+				padding: 20px 15px;
+				
+				.work-space-tittle{
+					font-size: 16px;
+					line-height: 22px;
+					font-weight: 700;
+					color: #202224;
+				}
+			}
+		}
+	}
+	}
+	
+
+.canvas-section .ql-container.ql-snow {
+	// border-bottom-left-radius: 0.5em;
+	// border-bottom-right-radius: 0.5em;
+	// background: #fefcfc;
+	border: none;
+}
+
+/* Snow Theme */
+.canvas-section .ql-snow.ql-toolbar {
+	display: block;
+	background: #eaecec;
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+}
+
+/* Bubble Theme */
+.canvas-section .ql-bubble .ql-editor {
+	border: 1px solid #ccc;
+	border-radius: 0.5em;
+}
+
+.canvas-section .ql-editor {
+	min-height: 18em;
+	padding: 8px 0 0 0;
+}
+
+.themeSwitcher {
+	margin-top: 0.5em;
+	font-size: small;
+}
+.editor-toolbar-color {
+	width: 25px;
+	height: 25px;
+	border: 0.5px solid black;
+	border-radius: 50%;
+	background: attr(data-color);
+}
+
+
+#toolbar {
+	border: 1px solid black;
+	border-top-left-radius:0.5em;
+	border-top-right-radius:0.5em
+  }
+  .hidden {
+	display: none !important;
+  }
+  .sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background: white;
+	z-index: 10;
+  }

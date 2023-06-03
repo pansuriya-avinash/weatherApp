@@ -1,0 +1,85 @@
+.header-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 20px;
+	padding: 0px 30px;
+	height: 100px;
+	background: getColor($grey, 100);
+	border-bottom: 1px solid rgba(32, 34, 36, 0.4);
+	.header-details {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 80px;
+		.header-links {
+			display: flex;
+			align-items: center;
+			gap: 22px;
+			.link {
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 500;
+				font-size: 20px;
+				line-height: 27px;
+				color: getColor($grey, 800);
+				opacity: 0.5;
+			}
+			.active {
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 700;
+				font-size: 20px;
+				line-height: 27px;
+				color: getColor($grey, 800);
+			}
+		}
+	}
+	.header-btns {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		.header-search-bar {
+			height: 43px;
+			background: getColor($white, 50);
+			opacity: 0.5;
+			border: 1px solid rgba(32, 34, 36, 0.5);
+			border-radius: 30px;
+			display: flex;
+			align-items: center;
+			position: relative;
+			padding: 0;
+			input {
+				background-color: transparent;
+				padding: 0 !important;
+				border: none !important;
+				outline: none;
+				margin: 0 10px;
+			}
+			::placeholder {
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 400;
+				font-size: 17px;
+				line-height: 23px;
+				color: getColor($grey, 800);
+			}
+		}
+		.header-sign-up-btn {
+			width: 109px;
+			height: 50px;
+			background: getColor($grey, 700);
+			border: 1px solid rgba(32, 34, 36, 0.5);
+			border-radius: 20px;
+			color: getColor($white, 50);
+		}
+		.header-login-btn {
+			width: 109px;
+			height: 50px;
+			background: getColor($grey, 100);
+			border: 2px solid rgba(58, 69, 83, 0.5);
+			border-radius: 20px;
+		}
+	}
+}

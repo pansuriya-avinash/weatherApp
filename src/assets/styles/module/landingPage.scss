@@ -1,0 +1,130 @@
+.landing-page-container {
+	padding-top: 110px;
+	width: calc(100% - 435px);
+	margin: 0 auto;
+	.landing-page-canvas {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.landing-page {
+			.canvas-details {
+				.model-canvas-line {
+					font-family: 'Open Sans';
+					font-style: normal;
+					font-weight: 400;
+					font-size: 20px;
+					line-height: 27px;
+					padding-bottom: 20px;
+					color: getColor($grey, 800);
+				}
+				.model-canvas-factors {
+					font-family: 'Open Sans';
+					font-style: normal;
+					font-weight: 500;
+					font-size: 34px;
+					line-height: 46px;
+					color: getColor($grey, 800);
+					margin: 0px;
+					overflow: hidden;
+					width: 100%;
+					max-width: 767px;
+				}
+				.model-canvas-works {
+					font-family: 'Open Sans';
+					font-style: normal;
+					font-weight: 400;
+					font-size: 22px;
+					line-height: 30px;
+					color: getColor($grey, 700);
+					width: 100%;
+					max-width: 611px;
+					padding-top: 15px;
+				}
+			}
+			.create-canvas-btn {
+				background: getColor($grey, 700);
+				border-radius: 20px;
+				color: getColor($white, 50);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 18px;
+				height: 40px;
+				width: 176px;
+				margin-top: 40px;
+			}
+		}
+		.model-canvas-image {
+			background: getColor($white, 100);
+			border-radius: 40px;
+			width: 625px;
+			height: 449px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+	.create-model-details {
+		text-align: center;
+		padding-top: 140px;
+		.model-canvas-factors-line {
+			font-style: normal;
+			font-weight: 500;
+			font-size: 34px;
+			line-height: 46px;
+			color: getColor($grey, 800);
+			margin: 0px;
+			overflow: hidden;
+		}
+		.model-canvas-works-factors {
+			font-family: 'Open Sans';
+			font-style: normal;
+			font-weight: 400;
+			font-size: 22px;
+			line-height: 30px;
+			color: getColor($grey, 700);
+			margin: 0 auto;
+			width: 100%;
+			max-width: 857px;
+			padding-top: 15px;
+		}
+	}
+	.landing-page-canvas-steps {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 35px;
+		padding-top: 90px;
+		.canvas-steps-details {
+			display: flex;
+			gap: 40px;
+			justify-content: center;
+			.model-canvas-factors-step {
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 500;
+				font-size: 34px;
+				line-height: 46px;
+			}
+			.model-canvas-steps {
+				width: 100%;
+				max-width: 636px;
+				font-family: 'Open Sans';
+				font-style: normal;
+				font-weight: 400;
+				font-size: 22px;
+				line-height: 30px;
+			}
+		}
+		.model-canvas-steps-image {
+			width: 460px;
+			height: 460px;
+			border-radius: 40px;
+			background: getColor($white, 100);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+// // }
