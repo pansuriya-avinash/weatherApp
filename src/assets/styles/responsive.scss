@@ -1,0 +1,95 @@
+/*----------------------------- ViralStage Responsive ------------------------------------------*/
+@media only screen and (min-width: 1600px) {
+	/* Tittle
+	------------------------------------------------------------------------------*/
+}
+
+@media only screen and (max-width: 1440px) {
+}
+@media only screen and (max-width: 1299px) {
+}
+
+@media only screen and (max-width: 1199px) {
+}
+
+@media only screen and (min-width: 992px) {
+}
+
+@media only screen and (max-width: 992px) {
+	/* Navbar
+	------------------------------------------------------------------------------*/
+	.mini-navbar {
+		.submenu-icon {
+			display: none;
+		}
+		.nav {
+			.side-menu-shirnked {
+				a {
+					.alert-count {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	.navbar-default {
+		background-color: #081d34 !important;
+		transition: all ease 0.3s !important;
+	}
+	#page-wrapper {
+		// margin: 0 0 0 100px !important;
+
+		.navbar {
+			width: calc(100% - 170px);
+		}
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	/* Navbar
+	------------------------------------------------------------------------------*/
+
+	.navbar-static-side {
+		z-index: 2001;
+		position: fixed;
+		height: 100vh;
+		width: 250px;
+	}
+
+	.navbar-top-links .dropdown-messages,
+	.navbar-top-links .dropdown-tasks,
+	.navbar-top-links .dropdown-alerts {
+		margin-left: auto;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	/* Navbar
+	------------------------------------------------------------------------------*/
+
+	.navbar-static-side {
+		z-index: 2001;
+		position: fixed;
+		height: 100vh;
+		width: 250px;
+	}
+
+	.navbar-top-links .dropdown-messages,
+	.navbar-top-links .dropdown-tasks,
+	.navbar-top-links .dropdown-alerts {
+		margin-left: auto;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+}
+
+@media only screen and (max-width: 640px) {
+}
+
+@media only screen and (max-width: 479px) {
+}
+
+@media only screen and (max-width: 359px) {
+}
