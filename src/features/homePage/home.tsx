@@ -36,78 +36,10 @@ const Home = () => {
 	});
 	const [cityName, setCityName] = useState('');
 	const [location, setLocation] = useState({ latitude: '', longitude: '' });
+	const [searchData, setSearchData] = useState('');
 	useEffect(() => {
 		getMyLocation();
 	}, []);
-	// const FILE = QUERY_URL + `${location.latitude}` + `${location.longitude}` + API_OPTIONS + API_KEY;
-
-	// useEffect(() => {
-	// 	const FILE = QUERY_URL + `${location.latitude}` + `${location.longitude}` + API_OPTIONS + API_KEY;
-	// 	getLocationName();
-
-	// 	fetch(FILE)
-	// 		.then((res) => res.json())
-	// 		.then((data) => {
-	// 			// console.log('data:', data);
-	// 			setData(data);
-	// 			setDescription(data.current.weather[0].description);
-	// 			setTemp(Math.round(data.current.temp));
-	// 			setPressure(data.current.pressure);
-	// 			setHumidity(data.current.humidity);
-
-	// 			const main = data.current.weather[0].main;
-	// 			seticonsFullyUrl({
-	// 				today: iconBaseUrl + data?.current.weather[0].icon + iconFormat,
-	// 				tomorrow: iconBaseUrl + data?.daily[0].weather[0].icon + iconFormat,
-	// 				dAT: iconBaseUrl + data?.daily[1].weather[0].icon + iconFormat,
-	// 				now: iconBaseUrl + data.daily[1].weather[0].icon + iconFormat,
-	// 				plus1: iconBaseUrl + data.hourly[1].weather[0].icon + iconFormat,
-	// 				plus2: iconBaseUrl + data.hourly[2].weather[0].icon + iconFormat,
-	// 				plus3: iconBaseUrl + data.hourly[3].weather[0].icon + iconFormat,
-	// 				plus4: iconBaseUrl + data.hourly[4].weather[0].icon + iconFormat,
-	// 				plus5: iconBaseUrl + data.hourly[5].weather[0].icon + iconFormat
-	// 			});
-
-	// 			switch (main) {
-	// 				case 'Snow':
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')");
-	// 					break;
-	// 				case 'Clouds':
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')");
-	// 					break;
-	// 				case 'Fog':
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')");
-	// 					break;
-	// 				case 'Rain':
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')");
-	// 					break;
-	// 				case 'Clear':
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')");
-	// 					break;
-	// 				case 'Thunderstorm':
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')");
-	// 					break;
-	// 				default:
-	// 					setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')");
-	// 					break;
-	// 			}
-	// 		});
-	// }, [location]);
-	// useEffect(() => {
-	// 	if (data) {
-	// 		seticonsFullyUrl({
-	// 			today: iconBaseUrl + data?.current.weather[0].icon + iconFormat,
-	// 			tomorrow: iconBaseUrl + data?.daily[0].weather[0].icon + iconFormat,
-	// 			dAT: iconBaseUrl + data?.daily[1].weather[0].icon + iconFormat,
-	// 			now: iconBaseUrl + data.daily[1].weather[0].icon + iconFormat,
-	// 			plus1: iconBaseUrl + data.hourly[1].weather[0].icon + iconFormat,
-	// 			plus2: iconBaseUrl + data.hourly[2].weather[0].icon + iconFormat,
-	// 			plus3: iconBaseUrl + data.hourly[3].weather[0].icon + iconFormat,
-	// 			plus4: iconBaseUrl + data.hourly[4].weather[0].icon + iconFormat,
-	// 			plus5: iconBaseUrl + data.hourly[5].weather[0].icon + iconFormat
-	// 		});
-	// 	}
-	// }, [data]);
 
 	const getMyLocation = () => {
 		const location = window.navigator && window.navigator.geolocation;
@@ -191,22 +123,32 @@ const Home = () => {
 				setCityName(data.name);
 			});
 	};
-	const handelcity = (e) => {
-		console.log('e:', e);
+	const handelcity = () => {
+		fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${searchData}&appid=${apiKey}&units=metric`)
+			.then((res) => res.json())
+
+			.then((data) => {
+				console.log('data:', data[0]);
+				getData(`lat=${data[0].lat}&`, `lon=${data[0].lon}&`);
+				setCityName(data[0].name);
+			});
 	};
 
 	return (
-		<div className='container-xxl'>
+		<div className='waether-section'>
 			{data && (
-				<section className='vh-100'>
-					<div className='input-group mb-3 mt-3 d-flex  justify-content-end ml-2' onSubmit={handelcity}>
-						<div className='form-outline search-bar'>
-							<input id='search-focus' type='search' itemID='form1' className='form-control' />
-							<label className='form-label' htmlFor='form1'>
-								Search
-							</label>
+				<section className='waether-wrapper'>
+					<div className=' mb-3  d-flex  justify-content-end ml-2 search-bar'>
+						<div>
+							<input
+								className=' search-input'
+								placeholder='Search.....'
+								onChange={(e) => {
+									setSearchData(e.target.value);
+								}}
+							/>
 						</div>
-						<button type='button' className='btn btn-primary'>
+						<button type='submit' className='btn btn-primary' onClick={handelcity}>
 							<i className='fas fa-search'></i>
 						</button>
 					</div>
