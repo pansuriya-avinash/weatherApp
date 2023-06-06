@@ -128,7 +128,7 @@ const Home = () => {
 	};
 	const handelcity = () => {
 		fetch(
-			`http://api.openweathermap.org/geo/1.0/direct?q=${searchData}&appid=${process.env.REACT_APP_GEO_LOCATION_KEY}&units=metric`
+			`https://api.openweathermap.org/geo/1.0/direct?q=${searchData}&appid=${process.env.REACT_APP_GEO_LOCATION_KEY}&units=metric`
 		)
 			.then((res) => res.json())
 
