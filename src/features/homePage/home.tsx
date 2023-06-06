@@ -123,7 +123,6 @@ const Home = () => {
 		)
 			.then((res) => res.json())
 			.then((data) => {
-				console.log('data:', data.name);
 				setCityName(data.name);
 			});
 	};
