@@ -5,6 +5,13 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import Chart from './componet/chart';
+import { ToastContainer, toast } from 'react-toastify';
+
+import Clouds from '../../assets/images/Clouds.gif';
+import Fog from '../../assets/images/fog.gif';
+import Rain from '../../assets/images/rain.gif';
+import Clear from '../../assets/images/clear.gif';
+import Thunderstorm from '../../assets/images/Thunderstorm.gif';
 
 const QUERY_URL = 'https://api.openweathermap.org/data/2.5/onecall?';
 
@@ -21,7 +28,7 @@ const Home = () => {
 	const [temp, setTemp] = useState(undefined);
 	const [pressure, setPressure] = useState(undefined);
 	const [humidity, setHumidity] = useState(undefined);
-	const [bgGif, setBGGif] = useState(undefined);
+	const [bgGif, setBGGif] = useState({ cardBackground: '', appBackground: '' });
 	const [iconsFullyUrl, seticonsFullyUrl] = useState({
 		today: '',
 		tomorrow: '',
@@ -39,7 +46,10 @@ const Home = () => {
 	const [forecastData, setForecastData] = useState([]);
 
 	useEffect(() => {
+		getData();
 		getMyLocation();
+		getLocationName();
+		getForcast();
 	}, []);
 
 	const getMyLocation = () => {
@@ -54,8 +64,8 @@ const Home = () => {
 						latitude: position.coords.latitude,
 						longitude: position.coords.longitude
 					});
-					getData(`lat=${position.coords.latitude}&`, `lon=${position.coords.longitude}&`);
-					getLocationName(`lat=${position.coords.latitude}&`, `lon=${position.coords.longitude}&`);
+					getData(position.coords.latitude, position.coords.longitude);
+					getLocationName(position.coords.latitude, position.coords.longitude);
 					getForcast(position.coords.latitude, position.coords.longitude);
 				},
 				(error) => {
@@ -66,8 +76,10 @@ const Home = () => {
 		}
 	};
 
-	const getData = (lat: any, lon: any) => {
-		const FILE = QUERY_URL + `${lat}` + `${lon}` + API_OPTIONS + process.env.REACT_APP_API_KEY;
+	const getData = (lat?: any, lon?: any) => {
+		const latitude = lat ? lat : 23.033863;
+		const longitude = lon ? lon : 72.585022;
+		const FILE = QUERY_URL + `lat=${latitude}&` + `lon=${longitude}&` + API_OPTIONS + process.env.REACT_APP_API_KEY;
 
 		fetch(FILE)
 			.then((res) => res.json())
@@ -94,32 +106,58 @@ const Home = () => {
 
 				switch (main) {
 					case 'Snow':
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/snow.gif')",
+							appBackground: "url('https://media.tenor.com/hy3P2YB4ocAAAAAC/bonne-nuit.gif')"
+						});
 						break;
 					case 'Clouds':
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif')",
+							appBackground:
+								"url('https://i.pinimg.com/originals/85/db/41/85db411e5bebff00b8a21f6d29d8c394.gif')"
+						});
 						break;
 					case 'Fog':
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/fog.gif')",
+							appBackground: "url('https://media.tenor.com/5ImWLS5QAJgAAAAC/foggy-fog.gif')"
+						});
 						break;
 					case 'Rain':
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/rain.gif')",
+							appBackground: "url('https://giffiles.alphacoders.com/105/105451.gif')"
+						});
 						break;
 					case 'Clear':
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')",
+							appBackground:
+								"url('https://i.pinimg.com/originals/63/e5/45/63e545d079b27feee41103aa014a3ea5.gif')"
+						});
 						break;
 					case 'Thunderstorm':
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/thunderstorm.gif')",
+							appBackground: "url('https://media.tenor.com/6de-2dIt8RsAAAAM/storm-coming.gif')"
+						});
 						break;
 					default:
-						setBGGif("url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')");
+						setBGGif({
+							cardBackground: "url('https://mdbgo.io/ascensus/mdb-advanced/img/clear.gif')",
+							appBackground:
+								"url('https://i.pinimg.com/originals/63/e5/45/63e545d079b27feee41103aa014a3ea5.gif')"
+						});
 						break;
 				}
 			});
 	};
-	const getLocationName = (lat: any, lon: any) => {
+	const getLocationName = (lat?: any, lon?: any) => {
+		const latitude = lat ? lat : 23.033863;
+		const longitude = lon ? lon : 72.585022;
 		fetch(
-			`https://api.openweathermap.org/data/2.5/weather?${lat}${lon}appid=${process.env.REACT_APP_GEO_LOCATION_KEY}&units=metric`
+			`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_GEO_LOCATION_KEY}&units=metric`
 		)
 			.then((res) => res.json())
 			.then((data) => {
@@ -133,13 +171,18 @@ const Home = () => {
 			.then((res) => res.json())
 
 			.then((data) => {
-				console.log('data:', data[0]);
-				getData(`lat=${data[0].lat}&`, `lon=${data[0].lon}&`);
+				// toast.error(`${data.message}`, {
+				// 	position: toast.POSITION.TOP_RIGHT
+				// });
+
+				getData(data[0].lat, data[0].lon);
 				getForcast(data[0].lat, data[0].lon);
 				setCityName(data[0].name);
 			});
 	};
-	const getForcast = (latitude: any, longitude: any) => {
+	const getForcast = (lat?: any, lon?: any) => {
+		const latitude = lat ? lat : 23.033863;
+		const longitude = lon ? lon : 72.585022;
 		fetch(
 			`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&${process.env.REACT_APP_API_KEY}`
 		)
@@ -153,7 +196,12 @@ const Home = () => {
 	return (
 		<div className='waether-section'>
 			{data && (
-				<div className='waether-wrapper'>
+				<div
+					className='waether-wrapper'
+					style={{
+						background: bgGif.appBackground ?? 'url(https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif)'
+					}}
+				>
 					<div className=' mb-3  d-flex  justify-content-end ml-2 search-bar'>
 						<div>
 							<input
@@ -177,7 +225,7 @@ const Home = () => {
 											className='text-white bg-image shadow-4-strong'
 											style={{
 												backgroundImage:
-													bgGif ??
+													bgGif.cardBackground ??
 													'url(https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif)'
 											}}
 										>
@@ -284,6 +332,7 @@ const Home = () => {
 							<Chart forecastData={forecastData} />
 						</section>
 					</div>
+					<ToastContainer />
 				</div>
 			)}
 		</div>

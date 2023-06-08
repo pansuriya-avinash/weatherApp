@@ -1,15 +1,16 @@
 .waether-section {
-	height: 100vh;
+	height: calc(100vh - 20px);
+	min-height: 100%;
 	width: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
+	// background-repeat: no-repeat;
+	// background-size: cover;
 
 	.waether-wrapper {
-		background-image: url('../../images/weatherBackgroung.jpg');
+		// background-image: url('../../images/weatherBackgroung.jpg');
 		height: 100%;
 		width: 100%;
-		background-repeat: no-repeat;
-		background-size: cover;
+		background-repeat: no-repeat !important;
+		background-size: cover !important;
 		padding-bottom: 52px;
 
 		.search-bar {
