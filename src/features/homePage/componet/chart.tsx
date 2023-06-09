@@ -17,16 +17,22 @@ const Chart = (props: any) => {
 		labels: props.forecastData.map((ele: any) => moment(ele.dt_txt).format(' MMMM DD YYYY')),
 		datasets: [
 			{
-				label: 'MaxTemperature (°C)',
-				data: props.forecastData.map((ele: any) => ele.main.temp_max - 273.15),
+				label: 'Temperature (°C)',
+				data: props.forecastData.map((ele: any) => ele.main.temp - 273.15),
 				borderColor: 'rgb(255, 99, 132)',
 				backgroundColor: 'rgba(255, 99, 132, 0.5)'
 			},
 			{
-				label: 'MinTemperature (°C)',
-				data: props.forecastData.map((ele: any) => ele.main.temp_min - 273.15),
+				label: 'Humidity',
+				data: props.forecastData.map((ele: any) => ele.main.humidity),
 				borderColor: 'rgb(53, 162, 235)',
 				backgroundColor: 'rgba(53, 162, 235, 0.5)'
+			},
+			{
+				label: 'WindSpeed (km/h)',
+				data: props.forecastData.map((ele: any) => ele.wind.speed),
+				borderColor: 'rgb(53, 162, 235)',
+				backgroundColor: '#00A300'
 			}
 		]
 	};

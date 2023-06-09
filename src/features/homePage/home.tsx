@@ -47,7 +47,7 @@ const Home = () => {
 
 	useEffect(() => {
 		getData();
-		getMyLocation();
+		// getMyLocation();
 		getLocationName();
 		getForcast();
 	}, []);
@@ -77,8 +77,8 @@ const Home = () => {
 	};
 
 	const getData = (lat?: any, lon?: any) => {
-		const latitude = lat ? lat : 23.033863;
-		const longitude = lon ? lon : 72.585022;
+		const latitude = lat ? lat : 28.6517178;
+		const longitude = lon ? lon : 77.2219388;
 		const FILE = QUERY_URL + `lat=${latitude}&` + `lon=${longitude}&` + API_OPTIONS + process.env.REACT_APP_API_KEY;
 
 		fetch(FILE)
@@ -154,8 +154,8 @@ const Home = () => {
 			});
 	};
 	const getLocationName = (lat?: any, lon?: any) => {
-		const latitude = lat ? lat : 23.033863;
-		const longitude = lon ? lon : 72.585022;
+		const latitude = lat ? lat : 28.6517178;
+		const longitude = lon ? lon : 77.2219388;
 		fetch(
 			`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_GEO_LOCATION_KEY}&units=metric`
 		)
@@ -171,18 +171,20 @@ const Home = () => {
 			.then((res) => res.json())
 
 			.then((data) => {
-				// toast.error(`${data.message}`, {
-				// 	position: toast.POSITION.TOP_RIGHT
-				// });
-
+				console.log('object', data.cod);
+				if (data.cod >= 400) {
+					toast.error(`can not found city`, {
+						position: toast.POSITION.BOTTOM_RIGHT
+					});
+				}
 				getData(data[0].lat, data[0].lon);
 				getForcast(data[0].lat, data[0].lon);
 				setCityName(data[0].name);
 			});
 	};
 	const getForcast = (lat?: any, lon?: any) => {
-		const latitude = lat ? lat : 23.033863;
-		const longitude = lon ? lon : 72.585022;
+		const latitude = lat ? lat : 28.6517178;
+		const longitude = lon ? lon : 77.2219388;
 		fetch(
 			`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&${process.env.REACT_APP_API_KEY}`
 		)
@@ -191,6 +193,9 @@ const Home = () => {
 			.then((data) => {
 				setForecastData(data.list);
 			});
+	};
+	const handelcurrentLocation = () => {
+		getMyLocation();
 	};
 
 	return (
@@ -202,137 +207,164 @@ const Home = () => {
 						background: bgGif.appBackground ?? 'url(https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif)'
 					}}
 				>
-					<div className=' mb-3  d-flex  justify-content-end ml-2 search-bar'>
-						<div>
-							<input
-								className=' search-input'
-								placeholder='Search.....'
-								onChange={(e) => {
-									setSearchData(e.target.value);
-								}}
-							/>
+					<div className='background-opacity'>
+						<div className=' mb-3  d-flex  justify-content-end ml-2 search-bar'>
+							<div>
+								<input
+									className=' search-input'
+									placeholder='Search.....'
+									onChange={(e) => {
+										setSearchData(e.target.value);
+									}}
+								/>
+							</div>
+							<button type='submit' className='btn btn-primary mr-5' onClick={handelcity}>
+								<i className='fas fa-search'></i>
+							</button>
+							<button className='btn btn-primary ml-5' onClick={handelcurrentLocation}>
+								<i className='fa fa-map-marker' aria-hidden='true' />
+							</button>
 						</div>
-						<button type='submit' className='btn btn-primary' onClick={handelcity}>
-							<i className='fas fa-search'></i>
-						</button>
+						<div className='d-flex  waether-wrapper-div'>
+							<section className='half-width 	'>
+								<MDBContainer className='h-100'>
+									<MDBRow className='justify-content-center align-items-center h-100'>
+										<MDBCol md='12' lg='12' xl='6'>
+											<MDBCard
+												className='text-white bg-image shadow-4-strong'
+												style={{
+													backgroundImage:
+														bgGif.cardBackground ??
+														'url(https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif)'
+												}}
+											>
+												<MDBCardHeader className='p-4 border-0'>
+													<div className='text-center mb-3'>
+														<p className='h2 mb-1'>{cityName}</p>
+														<p className='mb-1'>{description}</p>
+														<p className='display-1 mb-1'>{(temp - 273.15).toFixed(0)}°C</p>
+														<span className=''>Pressure: {pressure}</span>
+														<span className='mx-2'>|</span>
+														<span className=''>Humidity: {humidity}%</span>
+													</div>
+												</MDBCardHeader>
+
+												<MDBCardBody className='p-4 border-top border-bottom mb-2'>
+													<MDBRow className='text-center'>
+														<MDBCol size='2'>
+															<strong className='d-block mb-2'>Now</strong>
+															<img src={iconsFullyUrl.now} className='' alt='' />
+															<strong className='d-block'>
+																{(data?.hourly[0].temp - 273.15).toFixed(2)}°
+															</strong>
+														</MDBCol>
+
+														<MDBCol size='2'>
+															<strong className='d-block mb-2'>{TIME_NOW + 1}</strong>
+															<img src={iconsFullyUrl.plus1} className='' alt='' />
+															<strong className='d-block'>
+																{(data?.hourly[1].temp - 273.15).toFixed(2)}°
+															</strong>
+														</MDBCol>
+
+														<MDBCol size='2'>
+															<strong className='d-block mb-2'>{TIME_NOW + 2}</strong>
+															<img src={iconsFullyUrl.plus2} className='' alt='' />
+															<strong className='d-block'>
+																{(data?.hourly[2].temp - 273.15).toFixed(2)}°
+															</strong>
+														</MDBCol>
+
+														<MDBCol size='2'>
+															<strong className='d-block mb-2'>{TIME_NOW + 3}</strong>
+															<img src={iconsFullyUrl.plus3} className='' alt='' />
+															<strong className='d-block'>
+																{(data?.hourly[3].temp - 273.15).toFixed(2)}°
+															</strong>
+														</MDBCol>
+
+														<MDBCol size='2'>
+															<strong className='d-block mb-2'>{TIME_NOW + 4}</strong>
+															<img src={iconsFullyUrl.plus4} className='' alt='' />
+															<strong className='d-block'>
+																{(data?.hourly[4].temp - 273.15).toFixed(2)}°
+															</strong>
+														</MDBCol>
+
+														<MDBCol size='2'>
+															<strong className='d-block mb-2'>{TIME_NOW + 5}</strong>
+															<img src={iconsFullyUrl.plus5} className='' alt='' />
+															<strong className='d-block'>
+																{(data?.hourly[5].temp - 273.15).toFixed(2)}°
+															</strong>
+														</MDBCol>
+													</MDBRow>
+												</MDBCardBody>
+
+												<MDBCardBody className='px-5'>
+													<MDBRow className='align-items-center'>
+														<MDBCol lg='5'>
+															<strong>Today</strong>
+														</MDBCol>
+
+														<MDBCol lg='2' className='text-center'>
+															<img className='w-100' src={iconsFullyUrl.today} alt='' />
+														</MDBCol>
+
+														<MDBCol lg='3' className='text-end'>
+															{(temp - 273.15).toFixed(2)}°
+														</MDBCol>
+													</MDBRow>
+
+													<MDBRow className='align-items-center'>
+														<MDBCol lg='5'>
+															<strong>Tomorrow</strong>
+														</MDBCol>
+
+														<MDBCol lg='2' className='text-center'>
+															<img
+																className='w-100'
+																src={iconsFullyUrl.tomorrow}
+																alt=''
+															/>
+														</MDBCol>
+
+														<MDBCol lg='3' className='text-end'>
+															{(Math.round(data?.daily[0].temp.day) - 273.15).toFixed(
+																2
+															) ?? undefined}
+															°
+														</MDBCol>
+													</MDBRow>
+
+													<MDBRow className='align-items-center'>
+														<MDBCol lg='5'>
+															<strong>Day after tommorow</strong>
+														</MDBCol>
+
+														<MDBCol lg='2' className='text-center'>
+															<img className='w-100' src={iconsFullyUrl.dAT} alt='' />
+														</MDBCol>
+
+														<MDBCol lg='3' className='text-end'>
+															{(Math.round(data?.daily[1].temp.day) - 273.15).toFixed(
+																2
+															) ?? undefined}
+															°
+														</MDBCol>
+													</MDBRow>
+												</MDBCardBody>
+											</MDBCard>
+										</MDBCol>
+									</MDBRow>
+								</MDBContainer>
+							</section>
+							<section className='half-width 	'>
+								<Chart forecastData={forecastData} />
+							</section>
+						</div>
+						<ToastContainer />
 					</div>
-					<div className='d-flex  waether-wrapper-div'>
-						<section className='half-width 	'>
-							<MDBContainer className='h-100'>
-								<MDBRow className='justify-content-center align-items-center h-100'>
-									<MDBCol md='12' lg='12' xl='6'>
-										<MDBCard
-											className='text-white bg-image shadow-4-strong'
-											style={{
-												backgroundImage:
-													bgGif.cardBackground ??
-													'url(https://mdbgo.io/ascensus/mdb-advanced/img/clouds.gif)'
-											}}
-										>
-											<MDBCardHeader className='p-4 border-0'>
-												<div className='text-center mb-3'>
-													<p className='h2 mb-1'>{cityName}</p>
-													<p className='mb-1'>{description}</p>
-													<p className='display-1 mb-1'>{(temp - 273.15).toFixed(2)}°C</p>
-													<span className=''>Pressure: {pressure}</span>
-													<span className='mx-2'>|</span>
-													<span className=''>Humidity: {humidity}%</span>
-												</div>
-											</MDBCardHeader>
-
-											<MDBCardBody className='p-4 border-top border-bottom mb-2'>
-												<MDBRow className='text-center'>
-													<MDBCol size='2'>
-														<strong className='d-block mb-2'>Now</strong>
-														<img src={iconsFullyUrl.now} className='' alt='' />
-														<strong className='d-block'>{data?.hourly[0].temp}°</strong>
-													</MDBCol>
-
-													<MDBCol size='2'>
-														<strong className='d-block mb-2'>{TIME_NOW + 1}</strong>
-														<img src={iconsFullyUrl.plus1} className='' alt='' />
-														<strong className='d-block'>{data?.hourly[1].temp}°</strong>
-													</MDBCol>
-
-													<MDBCol size='2'>
-														<strong className='d-block mb-2'>{TIME_NOW + 2}</strong>
-														<img src={iconsFullyUrl.plus2} className='' alt='' />
-														<strong className='d-block'>{data?.hourly[2].temp}°</strong>
-													</MDBCol>
-
-													<MDBCol size='2'>
-														<strong className='d-block mb-2'>{TIME_NOW + 3}</strong>
-														<img src={iconsFullyUrl.plus3} className='' alt='' />
-														<strong className='d-block'>{data?.hourly[3].temp}°</strong>
-													</MDBCol>
-
-													<MDBCol size='2'>
-														<strong className='d-block mb-2'>{TIME_NOW + 4}</strong>
-														<img src={iconsFullyUrl.plus4} className='' alt='' />
-														<strong className='d-block'>{data?.hourly[4].temp}°</strong>
-													</MDBCol>
-
-													<MDBCol size='2'>
-														<strong className='d-block mb-2'>{TIME_NOW + 5}</strong>
-														<img src={iconsFullyUrl.plus5} className='' alt='' />
-														<strong className='d-block'>{data?.hourly[5].temp}°</strong>
-													</MDBCol>
-												</MDBRow>
-											</MDBCardBody>
-
-											<MDBCardBody className='px-5'>
-												<MDBRow className='align-items-center'>
-													<MDBCol lg='5'>
-														<strong>Today</strong>
-													</MDBCol>
-
-													<MDBCol lg='2' className='text-center'>
-														<img className='w-100' src={iconsFullyUrl.today} alt='' />
-													</MDBCol>
-
-													<MDBCol lg='3' className='text-end'>
-														{temp}°
-													</MDBCol>
-												</MDBRow>
-
-												<MDBRow className='align-items-center'>
-													<MDBCol lg='5'>
-														<strong>Tomorrow</strong>
-													</MDBCol>
-
-													<MDBCol lg='2' className='text-center'>
-														<img className='w-100' src={iconsFullyUrl.tomorrow} alt='' />
-													</MDBCol>
-
-													<MDBCol lg='3' className='text-end'>
-														{Math.round(data?.daily[0].temp.day) ?? undefined}°
-													</MDBCol>
-												</MDBRow>
-
-												<MDBRow className='align-items-center'>
-													<MDBCol lg='5'>
-														<strong>Day after tommorow</strong>
-													</MDBCol>
-
-													<MDBCol lg='2' className='text-center'>
-														<img className='w-100' src={iconsFullyUrl.dAT} alt='' />
-													</MDBCol>
-
-													<MDBCol lg='3' className='text-end'>
-														{Math.round(data?.daily[1].temp.day) ?? undefined}°
-													</MDBCol>
-												</MDBRow>
-											</MDBCardBody>
-										</MDBCard>
-									</MDBCol>
-								</MDBRow>
-							</MDBContainer>
-						</section>
-						<section className='half-width 	'>
-							<Chart forecastData={forecastData} />
-						</section>
-					</div>
-					<ToastContainer />
 				</div>
 			)}
 		</div>

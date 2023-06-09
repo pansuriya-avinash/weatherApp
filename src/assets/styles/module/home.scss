@@ -1,32 +1,32 @@
 .waether-section {
-	height: calc(100vh - 20px);
-	min-height: 100%;
 	width: 100%;
-	// background-repeat: no-repeat;
-	// background-size: cover;
+	height: 100%;
 
 	.waether-wrapper {
-		// background-image: url('../../images/weatherBackgroung.jpg');
-		height: 100%;
 		width: 100%;
+		min-height: 100vh;
 		background-repeat: no-repeat !important;
 		background-size: cover !important;
-		padding-bottom: 52px;
 
-		.search-bar {
-			padding-top: 20px;
-			margin-right: 20px;
-			.search-input {
-				border: 1px solid black;
-				border-radius: 10px;
-				padding: 10px;
-				width: 300px;
+		.background-opacity {
+			background-color: hsla(209, 43%, 13%, 0.8);
+			min-height: 100vh;
+
+			.search-bar {
+				padding-top: 20px;
+				margin-right: 20px;
+				.search-input {
+					border: 1px solid black;
+					border-radius: 10px;
+					padding: 10px;
+					width: 300px;
+				}
 			}
-		}
-		.waether-wrapper-div {
-			margin: 0 20px;
-			.chart-wrapper {
-				background-color: #fff;
+			.waether-wrapper-div {
+				margin: 0 20px;
+				.chart-wrapper {
+					background-color: #fff;
+				}
 			}
 		}
 	}
